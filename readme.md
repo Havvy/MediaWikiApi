@@ -41,12 +41,12 @@ the wrapper moves to using events, those callbacks will become optional.
 
 The callback takes three parameters: err, res, ahr.
 
-* '''err''' is the Error, either from Node or from MediaWiki.
-* '''res''' is the result.
-* '''ahr''' is the internal abstract-http-request object that the library uses
+* **err** is the Error, either from Node or from MediaWiki.
+* **res** is the result.
+* **ahr** is the internal abstract-http-request object that the library uses
 and can be used in debugging.
 
-Both '''err''' and '''res''' are JSON object.
+Both **err** and **res** are in JSON.
 
 ## Functionality
 
@@ -99,7 +99,7 @@ wiki.login('user', 'mysecret', function (err, res) {
 wiki.getArticleContents(article, callback)
 ```
 
-'''article''' is the title of the article.
+__article__ is the title of the article.
 
 This method returns the contents of the article as a string.
 
@@ -109,19 +109,19 @@ This method returns the contents of the article as a string.
 wiki.edit(article, body, callback)
 ```
 
-The '''article''' can be either a string for the page name or a number for its
+The **article** can be either a string for the page name or a number for its
 id.
 
-The '''body''' can contain all of the parameters found at
+The **body** can contain all of the parameters found at
 https://www.mediawiki.org/wiki/API:Edit. Even so, it requires one of the
 following properties: text, appendtext, prependtext
 
-If ''appendtext'' or ''prependtext'' are set, then the ''text'' parameter is
+If *appendtext* or *prependtext* are set, then the *text* parameter is
 ignored.
 
-The edit token and md5 are automatically handled for you.
+The edit token and md5 verification are automatically handled for you.
 
-Edits done by this method will not create new pages.
+Edits done by this method will not create new pages, or restore deleted pages.
 
 ### Getting Category Members
 
@@ -180,11 +180,12 @@ wiki._post(query, body, callback)
 wiki._get(query, callback)
 wiki._query(query, callback)
 wiki._request(query, callback, method, body)
+```
 
 As of right now, there's no function other than the private _request method
 that can handle things you usually have to be logged in to do.
 
-'''query''' is an object representation of the URL parameters. For example,
+__query__ is an object representation of the URL parameters. For example,
 {
     action: 'query',
     list: 'categorymembers'
@@ -197,11 +198,11 @@ By default, format: 'json' will be added to all queries.
 If you use, _query, then the method is get, and action: 'query' is set by
 default.
 
-'''callback''' is explained eariler.
+__callback__ is explained eariler.
 
-'''method''' is the HTTP method. I.E. GET or POST.
+__method__ is the HTTP method. I.E. GET or POST.
 
-'''body''' is the body of the message as a JS object. Only use for HTTP
+__body__ is the body of the message as a JS object. Only use for HTTP
 methods that have a body.
 
 ## Final Words
@@ -211,3 +212,7 @@ specific itch. If you need any additional features, they can be added.
 
 At some point, the wrapper will be event driven instead of futures driven. The
 events will pass the same information as the callbacks already present.
+
+If you do queries that are passed the results limit, you'll have to configure
+the continuations yourself. This might be handled by the library automatically
+in the future.
