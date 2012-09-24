@@ -99,9 +99,12 @@ wiki.login('user', 'mysecret', function (err, res) {
 wiki.getArticleContents(article, callback)
 ```
 
-__article__ is the title of the article.
+__article__ is the title of the article or the article id.
 
-This method returns the contents of the article as a string.
+Only one article should be sent. A request for multiple articles will return
+only one article in an arbitrary fashion.
+
+This method returns the contents of the article as a plain old string.
 
 ### Editing Pages
 
