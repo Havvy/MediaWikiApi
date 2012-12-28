@@ -34,19 +34,17 @@ The only configurable property is ''isBot'', which is true by default.
 wiki.isBot = (true || false);
 ```
 
-### Callbacks
+### Events
 
-Every function requires a callback when the operation is done performing. When
-the wrapper moves to using events, those callbacks will become optional.
+Every function returns an event emitter that will emit three events:
 
-The callback takes three parameters: err, res, ahr.
+* complete &mdash; Called when the request is complete. Gives err and res as
+parameters.
+* error &mdash; Called when the request is complete and there is an error.
+* result &mdash; Called when the request is complete, and there is no error.
 
-* **err** is the Error, either from Node or from MediaWiki.
-* **res** is the result.
-* **ahr** is the internal abstract-http-request object that the library uses
-and can be used in debugging.
-
-Both **err** and **res** are in JSON.
+An optional parameter after each method is a callback to be called when the
+complete event is fired.
 
 ## Functionality
 
@@ -104,7 +102,7 @@ __article__ is the title of the article or the article id.
 Only one article should be sent. A request for multiple articles will return
 only one article in an arbitrary fashion.
 
-This method returns the contents of the article as a plain old string.
+The contents of the article is a plain old string.
 
 ### Editing Pages
 
@@ -162,6 +160,37 @@ wiki.getCategoryMembers("Author", {
 });
 ```
 
+### Searching for Pages
+
+```javascript
+wiki.search(searchString, query)
+```
+
+You can pass any of the search parameters to query. The query defaults to 5
+results. You get an array of results, each result having the following fields:
+
+* ns - Namespace id of the article.
+* title
+* snippet - Some text on the page.
+* size - Number of bytes of the page.
+* wordcount - Number of words on the page.
+* timestamp - When this information was generated.
+
+#### Example
+
+This example prints the first ten titles of the search 'Wizard' on the DnD
+Wiki.
+
+```javascript
+dndwiki = new MediaWikiApi("dnd-wiki.org/");
+
+dndwiki.search("Wizard", {limit: 10}).on("result", function (articles) {
+    for (var ix = 0; ix < articles.length; ix++) {
+        console.log(articles[ix].title);
+    }
+}
+```
+
 ## Unimplemented Functionality
 
 If you use any of the methods described here, file an issue explaining what
@@ -212,9 +241,6 @@ methods that have a body.
 
 Again, the features that exist here exist because they were needed for a very
 specific itch. If you need any additional features, they can be added.
-
-At some point, the wrapper will be event driven instead of futures driven. The
-events will pass the same information as the callbacks already present.
 
 If you do queries that are passed the results limit, you'll have to configure
 the continuations yourself. This might be handled by the library automatically
