@@ -21,7 +21,7 @@ npm install mediawiki-api
 ```javascript
 var MediaWikiApi = require('mediawiki-api');
 
-wiki = new MediaWikiApi('example-wiki.org');
+wiki = new MediaWikiApi('your-wiki.org');
 ```
 
 All actions happen over HTTP.
@@ -162,6 +162,8 @@ wiki.getCategoryMembers("Author", {
 
 ### Searching for Pages
 
+* http://www.mediawiki.org/wiki/API:Search
+
 ```javascript
 wiki.search(searchString, query)
 ```
@@ -184,11 +186,14 @@ Wiki.
 ```javascript
 dndwiki = new MediaWikiApi("dnd-wiki.org/");
 
-dndwiki.search("Wizard", {limit: 10}).on("result", function (articles) {
+dndwiki.search("Wizard", {
+    limit: 10,
+    what: "text"
+}).on("result", function (articles) {
     for (var ix = 0; ix < articles.length; ix++) {
         console.log(articles[ix].title);
     }
-}
+});
 ```
 
 ## Unimplemented Functionality
