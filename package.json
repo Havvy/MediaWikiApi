@@ -2,6 +2,15 @@
   "name": "mediawiki-api",
   "version": "0.1.3",
   "description": "MediaWiki API Wrapper",
+  "author": {
+    "name": "Ryan Scheel",
+    "email": "ryan.havvy@gmail.com",
+    "web": "http://widget.mibbit.com/?channel=%23havvy&server=irc.mibbit.net"
+  },
+  "repository": {
+    "type": "git",
+    "url":"https://github.com/Havvy/MediaWikiApi.git"
+  },
   "maintainers": [{
     "name": "Ryan Scheel",
     "email": "ryan.havvy@gmail.com",
@@ -13,7 +22,9 @@
     "web": "http://widget.mibbit.com/?channel=%23havvy&server=irc.mibbit.net"
   }],
   "main": "lib",
-  "directories": ["lib"],
+  "directories": {
+      "lib": "./lib"
+  },
   "engines": {
     "node": ">=0.6.7"
   },
