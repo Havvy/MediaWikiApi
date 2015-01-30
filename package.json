@@ -1,6 +1,6 @@
 {
   "name": "mediawiki-api",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "MediaWiki API Wrapper",
   "author": {
     "name": "Ryan Scheel",
